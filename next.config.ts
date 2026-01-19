@@ -53,7 +53,8 @@ const pwaConfig = withPWA({
   dest: 'public',
   register: true,
   skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
+  // Cloudflareビルド時はPWAを無効化
+  disable: process.env.NODE_ENV === 'development' || process.env.CF_PAGES === '1',
   buildExcludes: [/middleware-manifest\.json$/],
   cacheOnFrontEndNav: true,
   reloadOnOnline: true,
@@ -68,4 +69,5 @@ const pwaConfig = withPWA({
   ],
 });
 
-export default pwaConfig(nextConfig);
+// PWAなしのシンプル設定
+export default nextConfig;
