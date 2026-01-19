@@ -13,27 +13,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-        <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              LP Portal
-            </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              ランディングページ一覧
-            </p>
-          </div>
-        </header>
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {children}
-        </main>
-        <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+      <body className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+        <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+          <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between">
+            <div>
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+                LP Portal
+              </h1>
+            </div>
+            <p className="text-xs text-gray-400 dark:text-gray-500 hidden sm:block">
               Powered by LarkBase
             </p>
           </div>
-        </footer>
+        </header>
+        <main className="flex-1 p-2 sm:p-3 overflow-hidden">
+          {children}
+        </main>
       </body>
     </html>
   );

@@ -74,36 +74,68 @@ export default function LPList() {
   }
 
   return (
-    <div className="flex gap-6 h-[calc(100vh-200px)] min-h-[600px]">
-      {/* メインプレビューエリア */}
-      <div className="flex-1 min-w-0">
-        {selectedLP && <LPPreview lp={selectedLP} />}
-      </div>
-
-      {/* サイドバー */}
-      <div className="w-72 flex-shrink-0 flex flex-col">
-        {/* ヘッダー */}
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-            LP一覧
-          </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {lpRecords.length}件
-          </p>
+    <>
+      {/* デスクトップ表示 */}
+      <div className="hidden md:flex gap-3 h-[calc(100vh-70px)]">
+        {/* メインプレビューエリア - 最大限広く */}
+        <div className="flex-1 min-w-0">
+          {selectedLP && <LPPreview lp={selectedLP} />}
         </div>
 
-        {/* スクロール可能なカードリスト */}
-        <div className="flex-1 overflow-y-auto pr-2 space-y-3 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
-          {lpRecords.map((lp) => (
-            <LPSidebarCard
-              key={lp.id}
-              lp={lp}
-              isSelected={selectedLP?.id === lp.id}
-              onClick={() => setSelectedLP(lp)}
-            />
-          ))}
+        {/* サイドバー - コンパクト */}
+        <div className="w-48 lg:w-56 flex-shrink-0 flex flex-col">
+          {/* ヘッダー */}
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              LP一覧
+            </span>
+            <span className="text-xs text-gray-400 dark:text-gray-500">
+              {lpRecords.length}件
+            </span>
+          </div>
+
+          {/* スクロール可能なカードリスト */}
+          <div className="flex-1 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+            {lpRecords.map((lp) => (
+              <LPSidebarCard
+                key={lp.id}
+                lp={lp}
+                isSelected={selectedLP?.id === lp.id}
+                onClick={() => setSelectedLP(lp)}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* モバイル表示 */}
+      <div className="md:hidden flex flex-col h-[calc(100vh-70px)]">
+        {/* LP選択バー */}
+        <div className="flex-shrink-0 pb-2 overflow-x-auto">
+          <div className="flex gap-2 px-1">
+            {lpRecords.map((lp) => (
+              <button
+                key={lp.id}
+                onClick={() => setSelectedLP(lp)}
+                className={`
+                  flex-shrink-0 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors
+                  ${selectedLP?.id === lp.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
+                  }
+                `}
+              >
+                {lp.title || '無題'}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* プレビューエリア */}
+        <div className="flex-1 min-h-0">
+          {selectedLP && <LPPreview lp={selectedLP} />}
+        </div>
+      </div>
+    </>
   );
 }
