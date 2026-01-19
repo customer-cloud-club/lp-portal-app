@@ -54,11 +54,6 @@ export default function LPPreview({ lp }: LPPreviewProps) {
           <h2 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white truncate">
             {lp.title || '無題のLP'}
           </h2>
-          {lp.status && (
-            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 flex-shrink-0">
-              {lp.status}
-            </span>
-          )}
         </div>
         <a
           href={lp.url}
