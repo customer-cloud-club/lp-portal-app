@@ -1,0 +1,4 @@
+{
+  "useClaudeCode": false,
+  "anthropicApiKey": "${ANTHROPIC_API_KEY}"
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lark Drive動画埋め込みテスト</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .test-section {
+      margin-bottom: 40px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    h2 {
+      color: #333;
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 10px;
+    }
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+    }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    .info { background: #d1ecf1; color: #0c5460; }
+    video {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 8px;
+    }
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Lark Drive動画埋め込みテスト</h1>
+
+  <!-- テスト1: iframe埋め込み -->
+  <div class="test-section">
+    <h2>テスト1: iframe埋め込み</h2>
+    <div class="status info">
+      <strong>手順:</strong>
+      <ol>
+        <li>Lark Driveで動画の共有リンクを取得</li>
+        <li>下記の [LARK_SHARE_LINK] を実際のURLに置き換え</li>
+        <li>ページをリロードして確認</li>
+      </ol>
+    </div>
+
+    <!-- ここに実際のLark共有リンクを入れる -->
+    <iframe
+      src="[LARK_SHARE_LINK]"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+    ></iframe>
+
+    <div id="iframe-result" class="status">結果: 待機中...</div>
+  </div>
+
+  <!-- テスト2: 直接リンク（video要素） -->
+  <div class="test-section">
+    <h2>テスト2: 直接動画リンク（video要素）</h2>
+    <div class="status info">
+      <strong>注意:</strong> Larkの直接ダウンロードURLが必要です（API経由で取得）
+    </div>
+
+    <video id="test-video" controls>
+      <source src="[LARK_DIRECT_URL]" type="video/mp4">
+      お使いのブラウザは動画タグをサポートしていません。
+    </video>
+
+    <div id="video-result" class="status">結果: 待機中...</div>
+  </div>
+
+  <!-- テスト3: パフォーマンス測定 -->
+  <div class="test-section">
+    <h2>テスト3: パフォーマンス測定</h2>
+    <div id="performance-result" class="status info">
+      <strong>測定項目:</strong>
+      <ul id="metrics">
+        <li>再生開始時間: <span id="load-time">-</span></li>
+        <li>バッファリング回数: <span id="buffer-count">0</span></li>
+        <li>ダウンロード可否: <span id="download-check">確認中...</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- テスト4: アクセス制御 -->
+  <div class="test-section">
+    <h2>テスト4: アクセス制御</h2>
+    <div class="status info">
+      <strong>確認項目:</strong>
+      <ul>
+        <li>✓ シークレットウィンドウでアクセス可能か</li>
+        <li>✓ 他のブラウザでアクセス可能か</li>
+        <li>✓ スマホでアクセス可能か</li>
+        <li>✓ 右クリック→「名前を付けて保存」でダウンロード可能か</li>
+      </ul>
+    </div>
+    <div id="access-result" class="status">結果: 手動で確認してください</div>
+  </div>
+
+  <script>
+    // パフォーマンス測定
+    const video = document.getElementById('test-video');
+    let bufferCount = 0;
+    const startTime = performance.now();
+
+    if (video) {
+      // 再生開始時間を測定
+      video.addEventListener('loadeddata', () => {
+        const loadTime = performance.now() - startTime;
+        document.getElementById('load-time').textContent =
+          `${(loadTime / 1000).toFixed(2)}秒`;
+
+        const result = document.getElementById('video-result');
+        if (loadTime < 3000) {
+          result.className = 'status success';
+          result.textContent = '✅ 成功: 3秒以内に再生開始';
+        } else {
+          result.className = 'status error';
+          result.textContent = '⚠️ 警告: 再生開始に3秒以上かかっています';
+        }
+      });
+
+      // バッファリング検出
+      video.addEventListener('waiting', () => {
+        bufferCount++;
+        document.getElementById('buffer-count').textContent = bufferCount;
+      });
+
+      // エラー検出
+      video.addEventListener('error', (e) => {
+        const result = document.getElementById('video-result');
+        result.className = 'status error';
+        result.textContent = '❌ エラー: 動画を読み込めません - ' +
+          (video.error ? video.error.message : '不明なエラー');
+      });
+
+      // ダウンロード可否チェック
+      video.addEventListener('loadedmetadata', () => {
+        const src = video.querySelector('source').src;
+        if (src && src !== '[LARK_DIRECT_URL]') {
+          // ダウンロード可否を判定
+          const downloadable = !video.hasAttribute('controlslist') ||
+                             !video.getAttribute('controlslist').includes('nodownload');
+          document.getElementById('download-check').textContent =
+            downloadable ? '⚠️ ダウンロード可能' : '✅ ダウンロード防止済み';
+        }
+      });
+    }
+
+    // iframe読み込み確認
+    const iframe = document.querySelector('iframe');
+    if (iframe && iframe.src !== '[LARK_SHARE_LINK]') {
+      iframe.addEventListener('load', () => {
+        const result = document.getElementById('iframe-result');
+        result.className = 'status success';
+        result.textContent = '✅ 成功: iframeが読み込まれました';
+      });
+
+      iframe.addEventListener('error', () => {
+        const result = document.getElementById('iframe-result');
+        result.className = 'status error';
+        result.textContent = '❌ エラー: iframeを読み込めません（CORS制限の可能性）';
+      });
+    }
+  </script>
+</body>
+</html>

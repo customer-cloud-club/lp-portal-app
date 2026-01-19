@@ -1,0 +1,107 @@
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+/* Variants */
+.card--default {
+  border: 1px solid #e9ecef;
+}
+
+.card--outlined {
+  border: 2px solid #dee2e6;
+  background-color: transparent;
+}
+
+.card--elevated {
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card--elevated:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Padding */
+.card--padding-none {
+  padding: 0;
+}
+
+.card--padding-small {
+  padding: 0.5rem;
+}
+
+.card--padding-medium {
+  padding: 1rem;
+}
+
+.card--padding-large {
+  padding: 1.5rem;
+}
+
+/* Clickable */
+.card--clickable {
+  cursor: pointer;
+}
+
+.card--clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card--clickable:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Card sections */
+.card__header {
+  padding: 1rem 1rem 0.5rem 1rem;
+  border-bottom: 1px solid #e9ecef;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.card__content {
+  padding: 1rem;
+  flex: 1;
+}
+
+.card__footer {
+  padding: 0.5rem 1rem 1rem 1rem;
+  border-top: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+}
+
+/* When card has padding, override section padding */
+.card--padding-none .card__header,
+.card--padding-none .card__content,
+.card--padding-none .card__footer {
+  padding: 0;
+}
+
+.card--padding-small .card__header {
+  padding: 0.5rem 0.5rem 0.25rem 0.5rem;
+}
+
+.card--padding-small .card__content {
+  padding: 0.5rem;
+}
+
+.card--padding-small .card__footer {
+  padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+}
+
+.card--padding-large .card__header {
+  padding: 1.5rem 1.5rem 0.75rem 1.5rem;
+}
+
+.card--padding-large .card__content {
+  padding: 1.5rem;
+}
+
+.card--padding-large .card__footer {
+  padding: 0.75rem 1.5rem 1.5rem 1.5rem;
+}

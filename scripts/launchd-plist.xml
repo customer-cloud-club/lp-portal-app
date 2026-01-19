@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.skillfreak.auto-archive</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/npx</string>
+        <string>tsx</string>
+        <string>scripts/auto-archive-scheduler.ts</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/mashimaro/skillfreak-streaming-system</string>
+
+    <key>StartInterval</key>
+    <integer>900</integer><!-- 15分 = 900秒 -->
+
+    <key>StandardOutPath</key>
+    <string>/Users/mashimaro/skillfreak-streaming-system/logs/launchd-stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/mashimaro/skillfreak-streaming-system/logs/launchd-stderr.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>

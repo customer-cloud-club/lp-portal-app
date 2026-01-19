@@ -1,0 +1,1 @@
+importScripts("/push-handler.js"),console.log("[Custom Worker] Loaded");
